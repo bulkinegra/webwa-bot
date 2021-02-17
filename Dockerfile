@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir --trusted-host pypi.python.org -r api-setup/requi
 RUN cd api-setup; python setup.py install
 RUN rm -r api-setup
 
-CMD python echobot.py
+CMD sh
