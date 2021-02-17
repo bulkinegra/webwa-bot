@@ -5,12 +5,12 @@ FROM python:3.8
 WORKDIR /app
 
 # COPY requirements to /app dir
-COPY .webwa-master/ /app/api-setup/
-COPY .app/ /app/
+COPY /webwa-master/ /app/api-setup/
+COPY /app/ /app/
 
 # Install any needed packages specified in base.txt
 RUN pip install --no-cache-dir --trusted-host pypi.python.org -r api-setup/requirements.txt
 RUN cd api-setup; python setup.py install
-RUN rm -r api-setup 
-    
+RUN rm -r api-setup
+
 CMD python echobot.py
