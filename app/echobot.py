@@ -25,6 +25,7 @@ driver = WhatsAPIDriver(
     profile=profiledir, client="remote", command_executor=os.environ["SELENIUM"]
 )
 print("Waiting for QR")
+time.sleep(120)
 driver.wait_for_login()
 print("Saving session")
 driver.save_firefox_profile(remove_old=False)
