@@ -12,7 +12,7 @@ except KeyError:
 try:
     os.environ["MY_PHONE"]
 except KeyError:
-    print("Please set the environment variable SELENIUM to Selenium URL")
+    print("Please set the environment variable MY_PHONE to My phone URL")
     sys.exit(1)
 
 profiledir = os.path.join(".", "firefox_cache")
