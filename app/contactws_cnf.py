@@ -1,0 +1,6 @@
+# Worksheet - Contacts
+COLUM_ID = 0
+COLUM_PHONE = 1
+COLUM_DATA_CONTACT = 2
+COLUM_NEW_MSG = 3
+COLUM_DATA_MSG = 4

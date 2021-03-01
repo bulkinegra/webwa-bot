@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import time
+import sh_action
 
 from webwhatsapi import WhatsAPIDriver
 from webwhatsapi.objects.message import Message
@@ -21,7 +22,6 @@ driver = WhatsAPIDriver(
     profile=profiledir, client="remote", command_executor=os.environ["SELENIUM"]
 )
 print("Waiting for QR")
-time.sleep(120)
 driver.wait_for_login()
 print("Saving session")
 driver.save_firefox_profile(remove_old=False)
@@ -32,6 +32,19 @@ while True:
     print("Checking for more messages, status", driver.get_status())
     for contact in driver.get_unread():
         for message in contact.messages:
-            #print(json.dumps(message.get_js_obj(), indent=4))
             if isinstance(message, Message):  # Currently works for text messages only.
                 contact.chat.send_message(message.content)
+                print("class", message.__class__.__name__)
+                print("message", message)
+                print("id", message.id)
+                print("type", message.type)
+                print("timestamp", message.timestamp)
+                print("chat_id", message.chat_id)
+                print("sender", message.sender)
+                print("sender.id", message.sender.id)
+                print("sender.safe_name", message.sender.get_safe_name())
+                if message.type == "chat":
+                    print("-- Chat")
+                    print("safe_content", message.safe_content)
+                    print("content", message.content)
+                #sh_action.addShContact(id = 566, phone = 89554551203)

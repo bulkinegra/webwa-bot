@@ -9,12 +9,13 @@ services:
       - "5900:5900"
     environment:
       - VNC_NO_PASSWORD=1
-      
+
   wabot:
     container_name: wabot
     image: bulkinegra/wabot
     environment:
       - SELENIUM=http://firefox:4444/wd/hub
+      - PATH_G_AUTHORIZATION=/usr/app/g_authorization.json
     links:
       - firefox
-    entrypoint: [python, echobot.py]
+    entrypoint: [python, main.py]
