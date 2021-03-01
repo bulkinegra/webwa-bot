@@ -780,7 +780,9 @@ window.WAPI.sendMessage = function (id, message, done) {
     var chat = WAPI.getChat(id);
     if (chat !== undefined) {
         if (done !== undefined) {
-            chat.sendMessage(message).then(function checkmessage() {
+            chat.sendMessage(message);
+            //then(function
+            checkmessage() {
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -804,7 +806,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            });
+            } //);
             checkmessage();
             return true;
         } else {
