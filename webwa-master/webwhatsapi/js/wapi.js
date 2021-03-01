@@ -691,7 +691,12 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
     const chat = WAPI.getChat(messageObject.chat.id)
     if (chat !== undefined) {
         if (done !== undefined) {
-            chat.sendMessage(message, null, messageObject).then(function checkmessage() {
+            chat.sendMessage(message, null, messageObject);
+            chat.sendMessage(message);
+
+            // Fix from https://github.com/mukulhase/WebWhatsapp-Wrapper/pull/1003#issuecomment-785545951
+            // .then(function () {
+            function checkmessage() {
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -706,7 +711,7 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                             continue;
                         }
                         done(WAPI._serializeMessageObj(msg));
-                        return true;
+                        return True;
                     }
                     trials += 1;
                     console.log(trials);
@@ -717,8 +722,9 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            });
+            } // );
             checkmessage();
+
             return true;
         } else {
             chat.sendMessage(message, null, messageObject);
@@ -780,10 +786,9 @@ window.WAPI.sendMessage = function (id, message, done) {
     var chat = WAPI.getChat(id);
     if (chat !== undefined) {
         if (done !== undefined) {
-            chat.sendMessage(message);
 
-            // Fix from https://github.com/mukulhase/WebWhatsapp-Wrapper/pull/1003#issuecomment-785545951
-            // .then(function () {
+            chat.sendMessage(message);
+            
             function checkmessage() {
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
@@ -810,8 +815,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            } // );
-
+            }
             checkmessage();
 
             return true;
