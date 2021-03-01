@@ -54,13 +54,12 @@ if (!window.Store) {
             }
         });
 
-		window.Store.Chat.modelClass.prototype.sendMessage = function (e) {
-			window.Store.SendTextMsgToChat(this, ...arguments);
-		}
+        window.Store.Chat.modelClass.prototype.sendMessage = function (e) {
+            window.Store.SendTextMsgToChat(this, ...arguments);
+        }		
 
         return window.Store;
     }
-
         if (typeof webpackJsonp === 'function') {
             webpackJsonp([], {'parasite': (x, y, z) => getStore(z)}, ['parasite']);
         } else {
