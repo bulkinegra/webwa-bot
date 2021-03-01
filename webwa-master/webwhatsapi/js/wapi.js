@@ -781,11 +781,15 @@ window.WAPI.sendMessage = function (id, message, done) {
     if (chat !== undefined) {
         if (done !== undefined) {
             chat.sendMessage(message);
-            //then(function
-            checkmessage() {
+
+            // Fix from https://github.com/mukulhase/WebWhatsapp-Wrapper/pull/1003#issuecomment-785545951
+            // .then(function () {
+            function checkmessage() {
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
+
+                var trials = 0;
 
                 function check() {
                     for (let i = chat.msgs.models.length - 1; i >= 0; i--) {
@@ -795,7 +799,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                             continue;
                         }
                         done(WAPI._serializeMessageObj(msg));
-                        return true;
+                        return True;
                     }
                     trials += 1;
                     console.log(trials);
@@ -806,8 +810,10 @@ window.WAPI.sendMessage = function (id, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            } //);
+            } // );
+
             checkmessage();
+
             return true;
         } else {
             chat.sendMessage(message);
