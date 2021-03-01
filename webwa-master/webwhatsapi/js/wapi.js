@@ -56,7 +56,7 @@ if (!window.Store) {
 
         window.Store.Chat.modelClass.prototype.sendMessage = function (e) {
             window.Store.SendTextMsgToChat(this, ...arguments);
-        }		
+        }
 
         return window.Store;
     }
@@ -691,7 +691,7 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
     const chat = WAPI.getChat(messageObject.chat.id)
     if (chat !== undefined) {
         if (done !== undefined) {
-            chat.sendMessage(message, null, messageObject).then(function () {
+            chat.sendMessage(message, null, messageObject).then(function checkmessage() {
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -706,7 +706,7 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                             continue;
                         }
                         done(WAPI._serializeMessageObj(msg));
-                        return True;
+                        return true;
                     }
                     trials += 1;
                     console.log(trials);
@@ -717,7 +717,8 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            });
+            } //);
+            checkmessage();
             return true;
         } else {
             chat.sendMessage(message, null, messageObject);
@@ -779,12 +780,10 @@ window.WAPI.sendMessage = function (id, message, done) {
     var chat = WAPI.getChat(id);
     if (chat !== undefined) {
         if (done !== undefined) {
-            chat.sendMessage(message).then(function () {
+            chat.sendMessage(message).then(function checkmessage() {
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
-
-                var trials = 0;
 
                 function check() {
                     for (let i = chat.msgs.models.length - 1; i >= 0; i--) {
@@ -794,7 +793,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                             continue;
                         }
                         done(WAPI._serializeMessageObj(msg));
-                        return True;
+                        return true;
                     }
                     trials += 1;
                     console.log(trials);
@@ -805,7 +804,8 @@ window.WAPI.sendMessage = function (id, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            });
+            } //);
+            checkmessage();
             return true;
         } else {
             chat.sendMessage(message);
