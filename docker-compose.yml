@@ -18,4 +18,4 @@ services:
       - PATH_G_AUTHORIZATION=/usr/app/g_authorization.json
     links:
       - firefox
-    entrypoint: [python, main.py]
+    entrypoint: [python, remote.py]
