@@ -717,7 +717,7 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            } //);
+            });
             checkmessage();
             return true;
         } else {
@@ -804,7 +804,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            } //);
+            });
             checkmessage();
             return true;
         } else {
