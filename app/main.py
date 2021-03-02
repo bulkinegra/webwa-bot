@@ -47,4 +47,4 @@ while True:
                     print("-- Chat")
                     print("safe_content", message.safe_content)
                     print("content", message.content)
-                sh_action.addShContact(id = message.chat_id._serialized, phone = message.chat_id.user)
+                sh_action.addShContact(id = message.sender.id, phone = "хуй там пока что")
