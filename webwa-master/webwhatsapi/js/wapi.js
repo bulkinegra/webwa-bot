@@ -9,8 +9,8 @@
 if (!window.Store) {
     (function () {
         function getStore(modules) {
-        let foundCount = 0;
-		let neededObjects = [
+            let foundCount = 0;
+    		let neededObjects = [
                 { id: "Store", conditions: (module) => (module.default && module.default.Chat && module.default.Msg) ? module.default : null },
                 { id: "MediaCollection", conditions: (module) => (module.default && module.default.prototype && module.default.prototype.processAttachments) ? module.default : null },
                 { id: "MediaProcess", conditions: (module) => (module.BLOB) ? module : null },
@@ -27,39 +27,39 @@ if (!window.Store) {
                 { id: "SendSeen", conditions: (module) => (module.sendSeen) ? module.sendSeen : null },
                 { id: "sendDelete", conditions: (module) => (module.sendDelete) ? module.sendDelete : null }
             ];
-        for (let idx in modules) {
-            if ((typeof modules[idx] === "object") && (modules[idx] !== null)) {
-                neededObjects.forEach((needObj) => {
-                    if (!needObj.conditions || needObj.foundedModule)
-                        return;
-                    let neededModule = needObj.conditions(modules[idx]);
-                    if (neededModule !== null) {
-                        foundCount++;
-                        needObj.foundedModule = neededModule;
-                    }
-                });
+            for (let idx in modules) {
+                if ((typeof modules[idx] === "object") && (modules[idx] !== null)) {
+                    neededObjects.forEach((needObj) => {
+                        if (!needObj.conditions || needObj.foundedModule)
+                            return;
+                        let neededModule = needObj.conditions(modules[idx]);
+                        if (neededModule !== null) {
+                            foundCount++;
+                            needObj.foundedModule = neededModule;
+                        }
+                    });
 
-                if (foundCount == neededObjects.length) {
-                    break;
+                    if (foundCount == neededObjects.length) {
+                        break;
+                    }
                 }
             }
-        }
 
-        let neededStore = neededObjects.find((needObj) => needObj.id === "Store");
-        window.Store = neededStore.foundedModule ? neededStore.foundedModule : {};
-        neededObjects.splice(neededObjects.indexOf(neededStore), 1);
-        neededObjects.forEach((needObj) => {
-            if (needObj.foundedModule) {
-                window.Store[needObj.id] = needObj.foundedModule;
+            let neededStore = neededObjects.find((needObj) => needObj.id === "Store");
+            window.Store = neededStore.foundedModule ? neededStore.foundedModule : {};
+            neededObjects.splice(neededObjects.indexOf(neededStore), 1);
+            neededObjects.forEach((needObj) => {
+                if (needObj.foundedModule) {
+                    window.Store[needObj.id] = needObj.foundedModule;
+                }
+            });
+
+            window.Store.Chat.modelClass.prototype.sendMessage = function (e) {
+                window.Store.SendTextMsgToChat(this, ...arguments);
             }
-        });
 
-        window.Store.Chat.modelClass.prototype.sendMessage = function (e) {
-            window.Store.SendTextMsgToChat(this, ...arguments);
+            return window.Store;
         }
-
-        return window.Store;
-    }
         if (typeof webpackJsonp === 'function') {
             webpackJsonp([], {'parasite': (x, y, z) => getStore(z)}, ['parasite']);
         } else {
@@ -437,8 +437,7 @@ window.WAPI.getUnreadMessagesInChat = function (id, includeMe, includeNotificati
     if (done !== undefined) done(output);
     // return result list
     return output;
-}
-;
+};
 
 
 /**
@@ -694,8 +693,6 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
             chat.sendMessage(message, null, messageObject);
             chat.sendMessage(message);
 
-            // Fix from https://github.com/mukulhase/WebWhatsapp-Wrapper/pull/1003#issuecomment-785545951
-            // .then(function () {
             function checkmessage() {
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
@@ -722,7 +719,7 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                     sleep(500).then(check);
                 }
                 check();
-            } // );
+            }
             checkmessage();
 
             return true;
@@ -809,7 +806,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                         done(WAPI._serializeMessageObj(msg));
                         return True;
                     }
-                    
+
                     trials += 1;
                     console.log(trials);
 
@@ -1245,19 +1242,19 @@ window.WAPI.getBufferedNewMessages = function (done) {
 /** End new messages observable functions **/
 
 window.WAPI.sendImage = function (imgBase64, chatid, filename, caption, done) {
-//var idUser = new window.Store.UserConstructor(chatid);
-var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
-// create new chat
-return Store.Chat.find(idUser).then((chat) => {
-    var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
-    var mc = new Store.MediaCollection(chat);
-    mc.processAttachments([{file: mediaBlob}, 1], chat, 1).then(() => {
-        var media = mc.models[0];
-        media.sendToChat(chat, { caption: caption });
-        if (done !== undefined) done(true);
+    //var idUser = new window.Store.UserConstructor(chatid);
+    var idUser = new window.Store.UserConstructor(chatid, { intentionallyUsePrivateConstructor: true });
+    // create new chat
+    return Store.Chat.find(idUser).then((chat) => {
+        var mediaBlob = window.WAPI.base64ImageToFile(imgBase64, filename);
+        var mc = new Store.MediaCollection(chat);
+        mc.processAttachments([{file: mediaBlob}, 1], chat, 1).then(() => {
+            var media = mc.models[0];
+            media.sendToChat(chat, { caption: caption });
+            if (done !== undefined) done(true);
+        });
     });
-});
-}
+};
 
 window.WAPI.base64ImageToFile = function (b64Data, filename) {
     var arr   = b64Data.split(',');
@@ -1366,7 +1363,7 @@ window.WAPI.contactBlock = function (id, done) {
     }
     done(false);
     return false;
-}
+};
 /**
  * unBlock contact
  * @param {string} id '000000000000@c.us'
@@ -1381,7 +1378,7 @@ window.WAPI.contactUnblock = function (id, done) {
     }
     done(false);
     return false;
-}
+};
 
 /**
  * Remove participant of Group
@@ -1397,7 +1394,7 @@ window.WAPI.removeParticipantGroup = function (idGroup, idParticipant, done) {
             done(true); return true;
         }
     })
-}
+};
 
 /**
  * Promote Participant to Admin in Group
@@ -1414,7 +1411,7 @@ window.WAPI.promoteParticipantAdminGroup = function (idGroup, idParticipant, don
         }
         done(false); return false;
     })
-}
+};
 
 /**
  * Demote Admin of Group
@@ -1434,4 +1431,4 @@ window.WAPI.demoteParticipantAdminGroup = function (idGroup, idParticipant, done
         }
         done(true); return true;
     })
-}
+};
