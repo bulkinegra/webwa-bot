@@ -691,12 +691,12 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
     const chat = WAPI.getChat(messageObject.chat.id)
     if (chat !== undefined) {
         if (done !== undefined) {
-
             chat.sendMessage(message, null, messageObject);
             chat.sendMessage(message);
 
+            // Fix from https://github.com/mukulhase/WebWhatsapp-Wrapper/pull/1003#issuecomment-785545951
+            // .then(function () {
             function checkmessage() {
-
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -719,10 +719,10 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                         done(true);
                         return;
                     }
-                    sleep(500);
+                    sleep(500).then(check);
                 }
                 check();
-            }
+            } // );
             checkmessage();
 
             return true;
@@ -809,7 +809,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                         done(WAPI._serializeMessageObj(msg));
                         return True;
                     }
-
+                    
                     trials += 1;
                     console.log(trials);
 
@@ -818,7 +818,7 @@ window.WAPI.sendMessage = function (id, message, done) {
                         return;
                     }
 
-                    sleep(500);
+                    sleep(500).then(check);
                 }
                 check();
             }
