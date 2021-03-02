@@ -691,12 +691,12 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
     const chat = WAPI.getChat(messageObject.chat.id)
     if (chat !== undefined) {
         if (done !== undefined) {
+
             chat.sendMessage(message, null, messageObject);
             chat.sendMessage(message);
 
-            // Fix from https://github.com/mukulhase/WebWhatsapp-Wrapper/pull/1003#issuecomment-785545951
-            // .then(function () {
             function checkmessage() {
+
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -719,10 +719,10 @@ window.WAPI.ReplyMessage = function (idMessage, message, done) {
                         done(true);
                         return;
                     }
-                    sleep(500).then(check);
+                    sleep(500);
                 }
                 check();
-            } // );
+            }
             checkmessage();
 
             return true;
@@ -788,8 +788,9 @@ window.WAPI.sendMessage = function (id, message, done) {
         if (done !== undefined) {
 
             chat.sendMessage(message);
-            
+
             function checkmessage() {
+
                 function sleep(ms) {
                     return new Promise(resolve => setTimeout(resolve, ms));
                 }
@@ -797,22 +798,27 @@ window.WAPI.sendMessage = function (id, message, done) {
                 var trials = 0;
 
                 function check() {
+
                     for (let i = chat.msgs.models.length - 1; i >= 0; i--) {
                         let msg = chat.msgs.models[i];
 
                         if (!msg.senderObj.isMe || msg.body != message) {
                             continue;
                         }
+
                         done(WAPI._serializeMessageObj(msg));
                         return True;
                     }
+
                     trials += 1;
                     console.log(trials);
+
                     if (trials > 30) {
                         done(true);
                         return;
                     }
-                    sleep(500).then(check);
+
+                    sleep(500);
                 }
                 check();
             }
