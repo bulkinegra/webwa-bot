@@ -1,19 +1,6 @@
 version: "3"
 
 services:
-  wabot:
-    container_name: wabot
-    build: .
-    volumes:
-      - /home/bulkinegra/github/webwa-bot/test/:/app/test
-    environment:
-      - SELENIUM=http://firefox:4444/wd/hub
-      - PATH_G_AUTHORIZATION=g_authorization.json
-      - CSS_SELECTOR=.two
-    links:
-      - firefox
-    entrypoint: [python, test/test.py]
-
   firefox:
     container_name: firefox
     image: selenium/standalone-firefox-debug:3.14.0-curium
@@ -22,3 +9,13 @@ services:
       - "5900:5900"
     environment:
       - VNC_NO_PASSWORD=1
+
+  wabot:
+    container_name: wabot
+    image: bulkinegra/wabot
+    environment:
+      - SELENIUM=http://firefox:4444/wd/hub
+      - PATH_G_AUTHORIZATION=/usr/app/g_authorization.json
+    links:
+      - firefox
+    entrypoint: [python, main.py]

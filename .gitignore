@@ -13,3 +13,5 @@ pkg/
 src/
 /venv3.9-wabot/
 /test/
+docker-compose-test.yml
+Dockerfile-test

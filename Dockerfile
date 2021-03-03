@@ -6,7 +6,7 @@ WORKDIR /app
 
 # COPY requirements to /app dir
 COPY /webwa-master/ /app/api-setup/
-COPY /test/ /app/
+COPY /app/ /app/
 
 # Install any needed packages specified in base.txt
 RUN pip install --no-cache-dir --trusted-host pypi.python.org -r api-setup/requirements.txt
