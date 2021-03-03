@@ -320,11 +320,13 @@ class WhatsAPIDriver(object):
         WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, self._SELECTORS['mainPage'] + ',' + self._SELECTORS['qrCode'])))
         try:
             print('First try to login')
+            time.sleep(3)
             self.driver.find_element_by_css_selector(self._SELECTORS['mainPage'])
             return True
         except NoSuchElementException:
             try:
-                print('Secondtry to login')
+                print('Second try to login')
+                time.sleep(3)
                 self.driver.find_element_by_css_selector(self._SELECTORS['mainPage'])
                 return True
             except NoSuchElementException:

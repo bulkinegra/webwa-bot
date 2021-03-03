@@ -15,7 +15,8 @@ services:
     image: bulkinegra/wabot
     environment:
       - SELENIUM=http://firefox:4444/wd/hub
-      - PATH_G_AUTHORIZATION=/usr/app/g_authorization.json
+      - PATH_G_AUTHORIZATION=g_authorization.json
+      - CSS_SELECTOR=.two
     links:
       - firefox
     entrypoint: [python, main.py]
