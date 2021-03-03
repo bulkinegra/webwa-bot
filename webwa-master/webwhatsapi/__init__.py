@@ -75,7 +75,7 @@ class WhatsAPIDriver(object):
         "firstrun": "#wrapper",
         "qrCode": "canvas",
         "qrCodePlain": "div[data-ref]",
-        "mainPage": "._3QfZd",
+        "mainPage": os.environ["CSS_SELECTOR"],
         "chatList": ".infinite-list-viewport",
         "messageList": "#main > div > div:nth-child(1) > div > div.message-list",
         "unreadMessageBar": "#main > div > div:nth-child(1) > div > div.message-list > div.msg-unread",
@@ -319,11 +319,18 @@ class WhatsAPIDriver(object):
         """
         WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, self._SELECTORS['mainPage'] + ',' + self._SELECTORS['qrCode'])))
         try:
+            print('First try to login')
             self.driver.find_element_by_css_selector(self._SELECTORS['mainPage'])
             return True
         except NoSuchElementException:
-            self.driver.find_element_by_css_selector(self._SELECTORS['qrCode'])
-            return False
+            try:
+                print('Secondtry to login')
+                self.driver.find_element_by_css_selector(self._SELECTORS['mainPage'])
+                return True
+            except NoSuchElementException:
+                print('No login')
+                self.driver.find_element_by_css_selector(self._SELECTORS['qrCode'])
+                return False
 
     def get_qr_plain(self):
         return self.driver.find_element_by_css_selector(
