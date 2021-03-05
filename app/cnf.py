@@ -10,4 +10,4 @@ INDEX_BOT_WS = 1
 
 # Authentication
 MY_EMAIL = "v.valentinvolkovWR@gmail.com"
-SERVICE_FILE = os.environ["PATH_G_AUTHORIZATION"]
+SERVICE_FILE = 'g_authorization.json'

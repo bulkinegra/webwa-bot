@@ -1,4 +1,3 @@
-import json
 import os
 import sys
 import time
@@ -33,9 +32,9 @@ while True:
     for contact in driver.get_unread():
         for message in contact.messages:
             if isinstance(message, Message):  # Currently works for text messages only.
-                new_contact = sh_action.addShContact(chat_id = message.sender.id, phone = "хуй там пока что")
+                new_contact = sh_action.add_sh_contact(chat_id=message.sender.id, phone="хуй там пока что")
                 if new_contact:
-                    msgs = sh_action.getMsgFromShBot()
+                    msgs = sh_action.get_msg_from_sh_bot()
                     for msg in msgs:
                         contact.chat.send_message(msg)
                         time.sleep(0.100*len(msg))

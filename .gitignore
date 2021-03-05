@@ -12,6 +12,4 @@
 pkg/
 src/
 /venv/
-/test/
-docker-compose-test.yml
-Dockerfile-test
+
