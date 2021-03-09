@@ -28,7 +28,7 @@ driver.save_firefox_profile(remove_old=False)
 print("Bot started")
 
 while True:
-    time.sleep(3)
+    time.sleep(600)
     print("Checking for more messages, status", driver.get_status())
     for contact in driver.get_unread():
         for message in contact.messages:
